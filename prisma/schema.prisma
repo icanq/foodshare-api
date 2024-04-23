@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// keeping all the data in the same collection and avoid relational data to make it simple
+
+model Food {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  photo       String
+  quantity    Int
+  location    String
+  date        DateTime
+  message     String?
+  email       String?
+  phoneNumber String?
+  userPhoto   String?
+  userName    String?
+  status      String?
+}
+
+model FoodRequest {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  foodId       String
+  foodName     String
+  date         DateTime
+  quantity     Int
+  location     String
+  ownerEmail   String
+  foodPhoto    String
+  status       String?
+  message      String
+  reqUserEmail String
+  reqUserName  String
+  reqUserPhoto String
+  reqDate      DateTime
+  userPhoto    String?
+  userName     String?
+  donation     String?
+}
+
+model User {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  email       String  @unique
+  phoneNumber String? @unique
+  photoUrl    String?
+  name        String?
+  token       String?
+}
